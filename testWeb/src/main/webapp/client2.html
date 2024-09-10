@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+			let canvas,ctx,clear;
+			window.onload = function(){
+				
+				let webSocket = new WebSocket("ws://localhost:8080/testWeb/mycenter");
+				webSocket.onopen = function(event){
+					console.log("open");
+					let message = {
+						isClient1:false,
+						isInit:true	
+					};
+					webSocket.send(JSON.stringify(message));
+				};
+				webSocket.onmessage = function(event){
+					let mesgObj = JSON.parse(event.data);
+					console.log("message:");
+					console.log(mesgObj);
+					
+					if(mesgObj.isClear){
+						clear();
+					}else{
+						if(mesgObj.isNewLine){
+							newLine(mesgObj.x,mesgObj.y);
+						}else{
+							drawLine(mesgObj.x,mesgObj.y);
+						}
+					}
+				};
+				webSocket.onclose = function(event){
+					console.log("close");
+				};
+				webSocket.onerror = function(event){
+					console.log("error");
+				};
+				
+				canvas = document.getElementById("myDrawer");
+				ctx = canvas.getContext("2d");
+				
+				function newLine(x,y){
+					ctx.beginPath();
+					ctx.lineWidth = 4;
+					ctx.moveTo(x,y);
+				}
+				
+				function drawLine(x,y){
+					ctx.lineTo(x,y);
+					ctx.stroke();
+				}
+				
+				function clear(){ ctx.clearRect(0,0,canvas.width,canvas.height); }
+			}
+		</script>
+	</head>
+	<body>
+		<canvas id="myDrawer" width="640px" height="480px" style="border:3px solid black"></canvas>
+		<hr>
+	</body>
+</html>

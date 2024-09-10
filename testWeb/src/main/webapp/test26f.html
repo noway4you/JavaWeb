@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+		
+			window.onload = function(){
+				
+				let arrayCookies = {};
+				parseCookie();
+				
+				function parseCookie(){
+					let cookie = document.cookie;
+					let cookies = cookie.split(";");
+					cookies.forEach(function(item,i){
+						let data = item.split("=");
+						if(data[0]){
+							arrayCookies[data[0].trim()] = data[1].trim();
+						}
+					});
+				}
+				
+				if(arrayCookies["account"]){
+					document.getElementById("account").value = arrayCookies["account"];
+				}
+				if(arrayCookies["password"]){
+					document.getElementById("password").value = arrayCookies["password"];
+				}
+				if(arrayCookies["remember"]){
+					document.getElementById("remember").checked = arrayCookies["remember"];
+				}
+				
+				function a(){console.log("a");};
+			}
+			
+			function beforeSubmit(){
+				let account = document.getElementById("account").value;
+				let password = document.getElementById("password").value;
+				let isRemember = document.getElementById("remember").checked;
+				
+				if(isRemember){
+					document.cookie = "account = " + account;
+					document.cookie = "password = " + password;
+					document.cookie = "remember = " + isRemember;
+				}else{
+					let cookies = document.cookie.split(";");
+					for(let i=0;i<cookies.length;i++){
+						let key = cookies[i].split("=")[0];
+						document.cookie = key + " = ;expires = Thu 01 Jan 1970 00:00:00 UTC";
+					}
+				}
+				return true;
+			}
+			
+		</script>
+	</head>
+	<body>
+		<form action="JSP42.jsp" onsubmit="return a()">
+			Account:<input name="account" id="account"><br><br>
+			Password:<input name="password" id="password"><br><br>
+			<input type="checkbox" id="remember">remember me<br><br>
+			<input type="submit" value="Login">
+		</form>
+	</body>
+</html>

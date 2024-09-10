@@ -1,0 +1,25 @@
+{
+	OrderID : 123,
+	CustomID : 123,
+	OrderDate : 1999-02-02 10:20:30
+	details: [
+		{
+			ProductID: 123,
+			ProductName: IPhone,
+			UnitPrice: 20,000,
+			Qty: 20
+		},
+		{
+			ProductID: 123,
+			ProductName: IPhone,
+			UninPrice: 20,000,
+			Qty: 20
+		},
+		{
+			ProductID: 123,
+			ProductName: IPhone,
+			UninPrice: 20,000,
+			Qty: 20
+		}
+	]
+}

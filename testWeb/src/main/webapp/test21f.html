@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script>
+			let xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if(xhttp.readyState==1){
+					document.getElementById("id1").innerHTML = "*";
+				}else if(xhttp.readyState==2){
+					document.getElementById("id2").innerHTML = "*";
+				}else if(xhttp.readyState==3){
+					document.getElementById("id3").innerHTML = "*";
+				}else if(xhttp.readyState==4){
+					document.getElementById("id4").innerHTML = "*";
+					if(xhttp.status==200){
+						document.getElementById("lottery").innerHTML = xhttp.responseText;
+					}
+				}
+			};
+			xhttp.onload = function(){
+				document.getElementById("lottery2").innerHTML = xhttp.responseText;
+			};
+			function test(){
+				xhttp.open("GET","JSP34.jsp",true);
+				xhttp.send();
+			}
+		</script>
+	</head>
+	<body>
+		<input type="button" onclick="test()" value="test"><br>
+		1. <span id="id1"></span><br><br>
+		2. <span id="id2"></span><br><br>
+		3. <span id="id3"></span><br><br>
+		4. <span id="id4"></span><br><br>
+		Lottery = <span id="lottery"></span><br><br>
+		Lottery2 = <span id="lottery2"></span>
+	</body>
+</html>
